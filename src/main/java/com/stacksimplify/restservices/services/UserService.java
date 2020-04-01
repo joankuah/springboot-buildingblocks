@@ -60,7 +60,7 @@ public class UserService {
         if(!optionalUser.isPresent()) {
             throw new UserNotFoundException("Unable to update user, please provide the correct user id");
         }
-        user.setId(id);
+        user.setUserId(id);
         return userRepository.save(user);
     }
 
