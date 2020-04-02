@@ -41,7 +41,7 @@ public class UserHateoasController {
 
         for (User user : allusers) {
             //Selflink
-            Long userid = user.getUserId();
+            Long userid = user.getUserid();
             Link selflink = WebMvcLinkBuilder.linkTo(this.getClass()).slash(userid).withSelfRel();
             user.add(selflink);
 
@@ -64,7 +64,7 @@ public class UserHateoasController {
         try {
             Optional<User> userOptional = userService.getUserById(id);
             User user = userOptional.get();
-            Long userid = user.getUserId();
+            Long userid = user.getUserid();
             Link selflink = WebMvcLinkBuilder.linkTo(this.getClass()).slash(userid).withSelfRel();
             user.add(selflink);
             EntityModel<User> finalResource = new EntityModel<User>(user);

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
@@ -12,7 +13,9 @@ import org.springframework.hateoas.RepresentationModel;
 //Entity
 @Entity
 @Table(name = "user")
-@JsonIgnoreProperties({"firstname", "lastname"})
+//This @JsonIgnoreProperties is part of Static Filtering @JsonIgnore
+//@JsonIgnoreProperties({"firstname", "lastname"})
+@JsonFilter(value = "userFilter")
 //Resource Support is now called RepresentationModel
 public class User extends RepresentationModel {
 
@@ -38,7 +41,7 @@ public class User extends RepresentationModel {
     private String role;
 
     @Column(name = "SSN", length = 50, nullable = true, unique = true)
-    @JsonIgnore
+//    @JsonIgnore
     private String ssn;
 
     @OneToMany(mappedBy = "user")
@@ -61,12 +64,12 @@ public class User extends RepresentationModel {
     }
 
     //Getters & Setters
-    public Long getUserId() {
+    public Long getUserid() {
         return userid;
     }
 
-    public void setUserId(Long id) {
-        this.userid = id;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getUsername() {

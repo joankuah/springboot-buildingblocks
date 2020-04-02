@@ -58,7 +58,7 @@ public class OrderService {
         if(!order.isPresent())
             throw new OrderNotFoundException("Order not found");
 
-        if(user.get().getUserId() != order.get().getUser().getUserId())
+        if(user.get().getUserid() != order.get().getUser().getUserid())
             throw new OrderNotFoundException("Order not found");
 
         return order;
