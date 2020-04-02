@@ -5,11 +5,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
 
 //Entity
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"firstname", "lastname"})
 //Resource Support is now called RepresentationModel
 public class User extends RepresentationModel {
 
@@ -34,7 +37,8 @@ public class User extends RepresentationModel {
     @Column(name = "ROLE", length = 50, nullable = false)
     private String role;
 
-    @Column(name = "SSN", length = 50, nullable = false, unique = true)
+    @Column(name = "SSN", length = 50, nullable = true, unique = true)
+    @JsonIgnore
     private String ssn;
 
     @OneToMany(mappedBy = "user")
