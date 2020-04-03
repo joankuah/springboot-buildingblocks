@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 //Entity
@@ -53,6 +54,9 @@ public class User extends RepresentationModel {
     @JsonView(Views.Internal.class)
     private String ssn;
 
+    @Column(name = "ADDRESS")
+    private String address;
+
     @OneToMany(mappedBy = "user")
     @JsonView(Views.Internal.class)
     private List<Order> orders;
@@ -63,7 +67,7 @@ public class User extends RepresentationModel {
     }
 
     //Fields Constructor
-    public User(Long userid, String username, String firstname, String lastname, String email, String role, String ssn) {
+    public User(Long userid, @NotEmpty(message = "Username is Mandatory Field. Please provide username") String username, @Size(min = 2, message = "FirstName should have at least 2 characters") String firstname, String lastname, String email, String role, String ssn, String address, List<Order> orders) {
         this.userid = userid;
         this.username = username;
         this.firstname = firstname;
@@ -71,6 +75,8 @@ public class User extends RepresentationModel {
         this.email = email;
         this.role = role;
         this.ssn = ssn;
+        this.address = address;
+        this.orders = orders;
     }
 
     //Getters & Setters
@@ -130,15 +136,22 @@ public class User extends RepresentationModel {
         this.ssn = ssn;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
     public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrder(List<Order> order) {
-        this.orders = order;
-    }
-
-    //To String
     @Override
     public String toString() {
         return "User{" +
@@ -149,6 +162,8 @@ public class User extends RepresentationModel {
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
                 ", ssn='" + ssn + '\'' +
+                ", address='" + address + '\'' +
+                ", orders=" + orders +
                 '}';
     }
 }
